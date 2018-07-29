@@ -19,7 +19,15 @@ function score(text) {
     let totalWords = text.split(' ').length;
     let totalSentences = 1;
     if(text.split('.').length > 1) {
-        totalSentences = text.split('.').length;
+        let sentences = text.split(/[\\.!?]/);
+        let nonEmptySentences = 0;
+        for(let s of sentences){
+            s = s.trim();
+            if(s.length > 0) {
+                nonEmptySentences += 1;
+            }
+        }
+        totalSentences = nonEmptySentences;
     }
     let totalSyllables = syllable_count(text);
     console.log('totalWords: ' + totalWords);
@@ -36,7 +44,7 @@ $(function() {
         text = $('#str').val();
         console.log(text);
         if(text.length > 0) {
-            $('#currentReadingLevel').html('Current Reading Level: ' + score(text));
+            $('#score').html('Score: ' + score(text));
         }
     });
 });
